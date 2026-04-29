@@ -4,6 +4,8 @@
 #Angela Navia Gallegos 22.521.765-3
 #Sofía Carez Chandia 20.973.833-3
 
+hola
+
 # SISTEMA DE PLANIFICACIÓN DE RESERVACIÓN DE HOTEL
 def mostrar_menu():
     menu = ""
@@ -42,7 +44,7 @@ def mostrar_plan(matriz, etiqueta_fila, etiqueta_columna, titulo):
 
     print("*" * 50)
 
-# Ingresar     
+# Ingresar 
 
         
         
