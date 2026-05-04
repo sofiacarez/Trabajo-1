@@ -4,7 +4,6 @@
 #Angela Navia Gallegos 22.521.765-3
 #Sofía Carez Chandia 20.973.833-3
 
-
 # MENÚ PRINCIPAL
 def menu():
     plan = []   # Inicialmente no hay plan de reservas
