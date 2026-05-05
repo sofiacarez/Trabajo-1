@@ -4,61 +4,6 @@
 #Angela Navia Gallegos 22.521.765-3
 #Sofía Carez Chandia 20.973.833-3
 
-# MENÚ PRINCIPAL
-def menu():
-    plan = []   # Inicialmente no hay plan de reservas
-    opcion = ¨"  # Iniciamos la variable
-    while opcion != "5":  # El buble se repite hasta que el usuario escriba 5
-        # Se muestra el menú principal
-        print("\nSISTEMA DE PLANIFICACIÓN DE RESERVACIÓN DE HABITACIONES DE HOTEL")
-        print("1. Generar plan de reservas")
-        print("2. Ingresar costo de reservas por habitación y día")
-        print("3. Visualizar ingreso total de una habitación")
-        print("4. Visualizar ingreso total por día")
-        print("5. Salir del programa")
-        
-        opcion = input("Seleccione su opción: ")
-        
-        if opcion == "1":
-            # Se pide al usuario el número de habitaciones y días
-            habitaciones = int(input("Ingrese número de habitaciones: "))
-            dias = int(input("Ingrese número de días de reserva (máx 5): "))
-            if dias > 5:
-                print("Error: no se puede reservar más de 5 días.")
-                continue
-            plan = generar_plan_reservas(habitaciones, dias)
-            print("\nPlan de reserva")
-            for i in range(habitaciones):
-                print(f"Habitación {i+1}: {plan[i]}")
-        
-        elif opcion == "2":
-            if plan:
-                plan = ingresar_costos(plan)
-                print("\nPlan actualizado:")
-                for i in range(len(plan)):
-                    print(f"Habitación {i+1}: {plan[i]}")
-            else:
-                print("Primero debe generar un plan de reservas (opción 1).")
-        
-        elif opcion == "3":
-            if plan:
-                habitacion = int(input("Ingrese la habitación a calcular: "))
-                ingreso_total_habitacion(plan, habitacion)
-            else:
-                print("Primero debe generar un plan de reservas.")
-        
-        elif opcion == "4":
-            if plan:
-                dia = int(input("Ingrese el día a calcular: "))
-                ingreso_total_dia(plan, dia)
-            else:
-                print("Primero debe generar un plan de reservas.")
-        
-        elif opcion == "5":
-            print("Fin de la ejecución del programa.")
-            break
-        else:
-            print("Opción inválida, intente nuevamente.")
 
 # Generar plan de reservas
 def generar_plan_reservas(habitaciones, dias):
@@ -112,6 +57,70 @@ def ingresar_costos(plan):
 def ingreso_total_habitacion(plan, habitacion):
     # Se suma el costo de todos los días de la habitación seleccionada
     total = sum(plan[habitacion-1])
+    with open("habitacion.txt", "w") as f:
+        f.write(f"Total de ingresos de la Habitación {habitacion}: ${total}\n")
+    with open("habitacion.txt", "r") as f:
+        print(f.read())
+
+# Calcular ingreso total de un día
+def ingreso_total_dia(plan, dia):
+    # Se suma el costo de todas las habitaciones en el día seleccionado
+    total = sum(plan[i][dia-1] for i in range(len(plan)))
+with open("dia.txt", "w") as f:
+        f.write(f"Total ingresos del día {dia}: ${total}\n")
+with open("dia.txt", "r") as f:
+        print(f.read())
+
+# Menú
+
+def mostrar_menu():
+    print("\nSISTEMA DE PLANIFICACIÓN DE RESERVACIÓN DE HABITACIONES DE HOTEL")
+    print("1. Generar plan de reservas")
+    print("2. Ingresar costo de reservas por habitación y día")
+    print("3. Visualizar ingreso total de una habitación")
+    print("4. Visualizar ingreso total por día")
+    print("5. Salir del programa")
+
+def menu():
+    plan = []
+    opcion = ""   # inicializamos la variable
+    while opcion != "5":   # se repite hasta que el usuario escriba "5"
+        mostrar_menu()     # llamamos a la función que imprime el menú
+        opcion = input("Seleccione su opción: ")
+
+        if opcion == "1":
+            habitaciones = int(input("Ingrese número de habitaciones: "))
+            dias = int(input("Ingrese número de días de reserva (máx 5): "))
+            if dias > 5:
+                print("Error: no se puede reservar más de 5 días.")
+                continue
+            plan = [[0 for _ in range(dias)] for _ in range(habitaciones)]
+            print("\nPlan de reserva")
+            for i in range(habitaciones):
+                print(f"Habitación {i+1}: {plan[i]}")
+
+        elif opcion == "2":
+            if plan:
+                print("Ingresando costos...")
+            else:
+                print("Primero debe generar un plan de reservas.")
+
+        elif opcion == "3":
+            if plan:
+                print("Calculando ingreso por habitación...")
+            else:
+                print("Primero debe generar un plan de reservas.")
+
+        elif opcion == "4":
+            if plan:
+                print("Calculando ingreso por día...")
+            else:
+                print("Primero debe generar un plan de reservas.")
+
+        elif opcion == "5":
+            print("Fin de la ejecución del programa.")
+        else:
+            print("Opción inválida, intente nuevamente.")
 
 
 # EJECUCIÓN DEL PROGRAMA
